@@ -4,361 +4,252 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>صيدليات العراق</title>
-    <meta name="description" content="تطبيق صيدليات العراق - اعثر على أقرب صيدلية ودواء في العراق">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚕️</text></svg>">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #4CAF50, #2196F3);
             min-height: 100vh;
-            color: #333;
         }
         
         .container {
-            max-width: 400px;
+            max-width: 800px;
             margin: 0 auto;
             background: white;
-            min-height: 100vh;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
         
         .header {
-            background: linear-gradient(135deg, #16a34a, #2563eb);
-            color: white;
-            padding: 20px;
             text-align: center;
+            margin-bottom: 40px;
         }
         
         .header h1 {
-            font-size: 24px;
-            margin-bottom: 5px;
+            color: #2E7D32;
+            font-size: 2.5em;
+            margin-bottom: 10px;
         }
         
         .header p {
-            font-size: 14px;
-            opacity: 0.9;
-        }
-        
-        .main-content {
-            padding: 20px;
-        }
-        
-        .search-section {
-            margin-bottom: 30px;
+            color: #666;
+            font-size: 1.2em;
         }
         
         .search-box {
-            position: relative;
-            margin-bottom: 20px;
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
         }
         
         .search-input {
             width: 100%;
-            padding: 15px 50px 15px 15px;
-            border: 2px solid #e5e7eb;
-            border-radius: 12px;
-            font-size: 16px;
-            outline: none;
-            transition: border-color 0.3s;
+            padding: 15px;
+            font-size: 18px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            box-sizing: border-box;
         }
         
         .search-input:focus {
-            border-color: #2563eb;
-        }
-        
-        .search-icon {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #9ca3af;
+            border-color: #4CAF50;
+            outline: none;
         }
         
         .map-section {
-            background: linear-gradient(135deg, #dbeafe, #dcfce7);
-            border-radius: 20px;
+            background: linear-gradient(45deg, #E8F5E8, #E3F2FD);
             padding: 30px;
+            border-radius: 20px;
             margin-bottom: 30px;
-            position: relative;
-            min-height: 400px;
+            text-align: center;
         }
         
         .map-title {
-            text-align: center;
-            background: white;
-            display: inline-block;
-            padding: 10px 20px;
-            border-radius: 25px;
+            font-size: 1.5em;
+            color: #2E7D32;
+            margin-bottom: 20px;
             font-weight: bold;
-            color: #16a34a;
-            position: absolute;
-            top: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
         
         .iraq-map {
-            width: 250px;
-            height: 300px;
-            background: linear-gradient(135deg, #22c55e, #15803d);
-            margin: 40px auto 0;
-            border-radius: 20px;
+            width: 300px;
+            height: 200px;
+            background: #4CAF50;
+            margin: 20px auto;
+            border-radius: 15px;
             position: relative;
-            clip-path: polygon(20% 10%, 80% 5%, 95% 30%, 90% 70%, 70% 95%, 30% 90%, 5% 60%, 10% 20%);
-            box-shadow: 0 8px 25px rgba(34, 197, 94, 0.3);
-        }
-        
-        .city-label {
-            position: absolute;
-            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2em;
             font-weight: bold;
-            color: #064e3b;
-            text-shadow: 0 1px 2px rgba(255,255,255,0.8);
         }
-        
-        .baghdad { top: 45%; right: 45%; font-size: 14px; }
-        .basra { bottom: 15%; right: 35%; }
-        .erbil { top: 20%; right: 40%; }
-        .mosul { top: 25%; right: 45%; }
         
         .pharmacy-dot {
             position: absolute;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            background: #ff4444;
             border: 3px solid white;
+            border-radius: 50%;
             cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-        }
-        
-        .pharmacy-dot:hover {
-            transform: scale(1.3);
         }
         
         .pharmacy-dot.open {
-            background: #22c55e;
-            animation: pulse 2s infinite;
+            background: #4CAF50;
         }
         
-        .pharmacy-dot.closed {
-            background: #ef4444;
-        }
-        
-        .pharmacy-dot.h24::after {
-            content: '';
-            position: absolute;
-            top: -2px;
-            right: -2px;
-            width: 8px;
-            height: 8px;
-            background: #fbbf24;
-            border-radius: 50%;
-            border: 1px solid white;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-        
-        .dot1 { top: 42%; right: 45%; }
-        .dot2 { top: 45%; right: 48%; }
-        .dot3 { bottom: 18%; right: 38%; }
-        .dot4 { top: 22%; right: 42%; }
-        .dot5 { top: 27%; right: 47%; }
+        .dot1 { top: 30%; left: 40%; }
+        .dot2 { top: 50%; left: 60%; }
+        .dot3 { bottom: 20%; right: 30%; }
         
         .legend {
-            background: white;
-            padding: 15px;
-            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
             margin-top: 20px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-        
-        .legend h4 {
-            text-align: center;
-            margin-bottom: 10px;
-            color: #374151;
         }
         
         .legend-item {
             display: flex;
             align-items: center;
-            margin-bottom: 8px;
-            font-size: 14px;
+            gap: 10px;
         }
         
         .legend-dot {
-            width: 12px;
-            height: 12px;
+            width: 15px;
+            height: 15px;
             border-radius: 50%;
-            margin-left: 10px;
             border: 2px solid white;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
         }
         
-        .legend-dot.open { background: #22c55e; }
-        .legend-dot.closed { background: #ef4444; }
-        .legend-dot.h24 {
-            background: #22c55e;
-            position: relative;
-        }
-        .legend-dot.h24::after {
-            content: '';
-            position: absolute;
-            top: -1px;
-            right: -1px;
-            width: 6px;
-            height: 6px;
-            background: #fbbf24;
-            border-radius: 50%;
-            border: 1px solid white;
-        }
+        .legend-dot.green { background: #4CAF50; }
+        .legend-dot.red { background: #ff4444; }
         
-        .pharmacies-list {
-            margin-top: 30px;
+        .pharmacies-grid {
+            display: grid;
+            gap: 20px;
         }
         
         .pharmacy-card {
             background: white;
+            border: 2px solid #e0e0e0;
             border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            border-left: 5px solid #22c55e;
-            transition: transform 0.3s;
+            padding: 25px;
+            transition: all 0.3s;
         }
         
         .pharmacy-card:hover {
-            transform: translateY(-2px);
+            border-color: #4CAF50;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .pharmacy-card.open {
+            border-left: 5px solid #4CAF50;
         }
         
         .pharmacy-card.closed {
-            border-left-color: #ef4444;
+            border-left: 5px solid #ff4444;
             opacity: 0.8;
         }
         
         .pharmacy-name {
-            font-size: 18px;
+            font-size: 1.4em;
             font-weight: bold;
-            color: #1f2937;
-            margin-bottom: 8px;
+            color: #2E7D32;
+            margin-bottom: 10px;
         }
         
         .pharmacy-address {
-            color: #6b7280;
-            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        
+        .pharmacy-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1em;
+        }
+        
+        .status {
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        .status.open {
+            background: #E8F5E8;
+            color: #2E7D32;
+        }
+        
+        .status.closed {
+            background: #FFEBEE;
+            color: #C62828;
+        }
+        
+        .medicines {
+            margin-top: 15px;
+        }
+        
+        .medicines h4 {
+            color: #2E7D32;
             margin-bottom: 10px;
         }
         
-        .pharmacy-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .pharmacy-hours {
-            font-size: 14px;
-            color: #374151;
-        }
-        
-        .pharmacy-status {
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-        
-        .status-open {
-            background: #dcfce7;
-            color: #166534;
-        }
-        
-        .status-closed {
-            background: #fee2e2;
-            color: #991b1b;
-        }
-        
-        .pharmacy-phone {
-            color: #2563eb;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 14px;
-        }
-        
-        .pharmacy-phone:hover {
-            text-decoration: underline;
-        }
-        
-        .medicines-list {
-            margin-top: 10px;
+        .medicine-tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 5px;
+            gap: 8px;
         }
         
         .medicine-tag {
-            background: #dbeafe;
-            color: #1e40af;
-            padding: 3px 8px;
-            border-radius: 8px;
-            font-size: 12px;
+            background: #E3F2FD;
+            color: #1976D2;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.9em;
         }
         
-        .footer {
-            background: #f9fafb;
-            padding: 20px;
-            text-align: center;
-            color: #6b7280;
-            border-top: 1px solid #e5e7eb;
+        .phone-link {
+            color: #2196F3;
+            text-decoration: none;
+            font-weight: bold;
         }
         
-        .search-results {
-            background: #fef3c7;
-            border: 1px solid #f59e0b;
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 20px;
+        .phone-link:hover {
+            text-decoration: underline;
         }
         
-        .search-results h3 {
-            color: #92400e;
-            margin-bottom: 10px;
-        }
-        
-        .no-results {
-            text-align: center;
-            color: #6b7280;
-            font-style: italic;
-        }
-        
-        @media (max-width: 480px) {
+        @media (max-width: 600px) {
             .container {
-                max-width: 100%;
+                padding: 20px;
+                margin: 10px;
             }
             
-            .main-content {
-                padding: 15px;
+            .pharmacy-details {
+                grid-template-columns: 1fr;
             }
             
-            .iraq-map {
-                width: 200px;
-                height: 250px;
-            }
-            
-            .pharmacy-info {
+            .legend {
                 flex-direction: column;
-                align-items: stretch;
+                align-items: center;
+                gap: 15px;
             }
         }
     </style>
@@ -367,67 +258,56 @@
     <div class="container">
         <div class="header">
             <h1>⚕️ صيدليات العراق</h1>
-            <p>أسرع طريقة للعثور على الدواء</p>
+            <p>اعثر على أقرب صيدلية ودواء بسهولة</p>
         </div>
         
-        <div class="main-content">
-            <div class="search-section">
-                <h2 style="margin-bottom: 15px; color: #374151;">🔍 البحث عن الأدوية</h2>
-                <div class="search-box">
-                    <input type="text" class="search-input" id="searchInput" placeholder="ابحث عن دواء (مثال: بنادول، أسبرين...)">
-                    <span class="search-icon">🔍</span>
-                </div>
-                <div id="searchResults"></div>
+        <div class="search-box">
+            <h3 style="margin-bottom: 15px; color: #2E7D32;">🔍 البحث عن الأدوية</h3>
+            <input type="text" 
+                   class="search-input" 
+                   placeholder="ابحث عن دواء... (مثال: بنادول، أسبرين)"
+                   onkeyup="searchMedicines(this.value)">
+            <div id="searchResults" style="margin-top: 15px;"></div>
+        </div>
+        
+        <div class="map-section">
+            <div class="map-title">🗺️ خريطة صيدليات العراق</div>
+            <div class="iraq-map">
+                العراق
+                <div class="pharmacy-dot open dot1" onclick="showPharmacyInfo('صيدلية النور - بغداد')"></div>
+                <div class="pharmacy-dot open dot2" onclick="showPharmacyInfo('صيدلية الشفاء - بغداد')"></div>
+                <div class="pharmacy-dot closed dot3" onclick="showPharmacyInfo('صيدلية البصرة - مغلقة')"></div>
             </div>
-            
-            <div class="map-section">
-                <div class="map-title">🗺️ خريطة العراق</div>
-                
-                <div class="iraq-map">
-                    <div class="city-label baghdad">بغداد</div>
-                    <div class="city-label basra">البصرة</div>
-                    <div class="city-label erbil">أربيل</div>
-                    <div class="city-label mosul">الموصل</div>
-                    
-                    <div class="pharmacy-dot open dot1" title="صيدلية النور - بغداد"></div>
-                    <div class="pharmacy-dot open h24 dot2" title="صيدلية الشفاء 24/7 - بغداد"></div>
-                    <div class="pharmacy-dot closed dot3" title="صيدلية البصرة الحديثة - البصرة"></div>
-                    <div class="pharmacy-dot open dot4" title="صيدلية أربيل المركزية - أربيل"></div>
-                    <div class="pharmacy-dot open dot5" title="صيدلية الموصل الطبية - الموصل"></div>
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-dot green"></div>
+                    <span>مفتوحة الآن</span>
                 </div>
-                
-                <div class="legend">
-                    <h4>🎨 دليل الألوان</h4>
-                    <div class="legend-item">
-                        <div class="legend-dot open"></div>
-                        <span>صيدلية مفتوحة</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-dot closed"></div>
-                        <span>صيدلية مغلقة</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-dot h24"></div>
-                        <span>مفتوحة 24/7</span>
-                    </div>
+                <div class="legend-item">
+                    <div class="legend-dot red"></div>
+                    <span>مغلقة</span>
                 </div>
             </div>
-            
-            <div class="pharmacies-list">
-                <h2 style="margin-bottom: 20px; color: #374151;">🏥 دليل الصيدليات</h2>
-                
-                <div class="pharmacy-card">
-                    <div class="pharmacy-name">صيدلية النور</div>
-                    <div class="pharmacy-address">📍 شارع الرشيد، بغداد</div>
-                    <div class="pharmacy-info">
-                        <div class="pharmacy-hours">🕐 8:00 ص - 11:00 م</div>
-                        <div class="pharmacy-status status-open">مفتوحة الآن</div>
+        </div>
+        
+        <div class="pharmacies-grid">
+            <div class="pharmacy-card open">
+                <div class="pharmacy-name">صيدلية النور</div>
+                <div class="pharmacy-address">📍 شارع الرشيد، بغداد، العراق</div>
+                <div class="pharmacy-details">
+                    <div class="detail-item">
+                        <span>🕐</span>
+                        <span>8:00 ص - 11:00 م</span>
                     </div>
-                    <div class="pharmacy-info" style="margin-top: 10px;">
-                        <a href="tel:+96412345678" class="pharmacy-phone">📞 +964 1 234 5678</a>
-                        <div style="font-size: 12px; color: #f59e0b;">⭐ 4.5</div>
+                    <div class="detail-item">
+                        <span>📞</span>
+                        <a href="tel:+96412345678" class="phone-link">+964 1 234 5678</a>
                     </div>
-                    <div class="medicines-list">
+                </div>
+                <div class="status open">مفتوحة الآن</div>
+                <div class="medicines">
+                    <h4>💊 الأدوية المتوفرة:</h4>
+                    <div class="medicine-tags">
                         <span class="medicine-tag">بنادول</span>
                         <span class="medicine-tag">أسبرين</span>
                         <span class="medicine-tag">أموكسيسيلين</span>
@@ -435,77 +315,101 @@
                         <span class="medicine-tag">أوميجا 3</span>
                     </div>
                 </div>
-                
-                <div class="pharmacy-card">
-                    <div class="pharmacy-name">صيدلية الشفاء 24/7</div>
-                    <div class="pharmacy-address">📍 حي الجادرية، بغداد</div>
-                    <div class="pharmacy-info">
-                        <div class="pharmacy-hours">🕐 24/7</div>
-                        <div class="pharmacy-status status-open">مفتوحة الآن</div>
+            </div>
+            
+            <div class="pharmacy-card open">
+                <div class="pharmacy-name">صيدلية الشفاء</div>
+                <div class="pharmacy-address">📍 حي الجادرية، بغداد، العراق</div>
+                <div class="pharmacy-details">
+                    <div class="detail-item">
+                        <span>🕐</span>
+                        <span>24/7 - مفتوحة دائماً</span>
                     </div>
-                    <div class="pharmacy-info" style="margin-top: 10px;">
-                        <a href="tel:+96413456789" class="pharmacy-phone">📞 +964 1 345 6789</a>
-                        <div style="font-size: 12px; color: #f59e0b;">⭐ 4.8</div>
-                    </div>
-                    <div class="medicines-list">
-                        <span class="medicine-tag">إنسولين</span>
-                        <span class="medicine-tag">ضغط الدم</span>
-                        <span class="medicine-tag">مضاد حيوي</span>
-                        <span class="medicine-tag">بنادول</span>
-                        <span class="medicine-tag">فيتامين ب12</span>
+                    <div class="detail-item">
+                        <span>📞</span>
+                        <a href="tel:+96413456789" class="phone-link">+964 1 345 6789</a>
                     </div>
                 </div>
-                
-                <div class="pharmacy-card closed">
-                    <div class="pharmacy-name">صيدلية البصرة الحديثة</div>
-                    <div class="pharmacy-address">📍 كورنيش البصرة، البصرة</div>
-                    <div class="pharmacy-info">
-                        <div class="pharmacy-hours">🕐 9:00 ص - 10:00 م</div>
-                        <div class="pharmacy-status status-closed">مغلقة</div>
-                    </div>
-                    <div class="pharmacy-info" style="margin-top: 10px;">
-                        <a href="tel:+96440123456" class="pharmacy-phone">📞 +964 40 123 456</a>
-                        <div style="font-size: 12px; color: #f59e0b;">⭐ 4.2</div>
-                    </div>
-                    <div class="medicines-list">
-                        <span class="medicine-tag">أدوية القلب</span>
+                <div class="status open">مفتوحة 24/7</div>
+                <div class="medicines">
+                    <h4>💊 الأدوية المتوفرة:</h4>
+                    <div class="medicine-tags">
+                        <span class="medicine-tag">إنسولين</span>
+                        <span class="medicine-tag">أدوية الضغط</span>
+                        <span class="medicine-tag">مضادات حيوية</span>
+                        <span class="medicine-tag">فيتامين ب12</span>
                         <span class="medicine-tag">مسكنات</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="pharmacy-card closed">
+                <div class="pharmacy-name">صيدلية البصرة الحديثة</div>
+                <div class="pharmacy-address">📍 كورنيش البصرة، البصرة، العراق</div>
+                <div class="pharmacy-details">
+                    <div class="detail-item">
+                        <span>🕐</span>
+                        <span>9:00 ص - 10:00 م</span>
+                    </div>
+                    <div class="detail-item">
+                        <span>📞</span>
+                        <a href="tel:+96440123456" class="phone-link">+964 40 123 456</a>
+                    </div>
+                </div>
+                <div class="status closed">مغلقة الآن</div>
+                <div class="medicines">
+                    <h4>💊 الأدوية المتوفرة:</h4>
+                    <div class="medicine-tags">
+                        <span class="medicine-tag">أدوية القلب</span>
                         <span class="medicine-tag">أدوية الأطفال</span>
                         <span class="medicine-tag">فيتامينات</span>
+                        <span class="medicine-tag">مكملات غذائية</span>
                     </div>
                 </div>
-                
-                <div class="pharmacy-card">
-                    <div class="pharmacy-name">صيدلية أربيل المركزية</div>
-                    <div class="pharmacy-address">📍 شارع 60 متر، أربيل</div>
-                    <div class="pharmacy-info">
-                        <div class="pharmacy-hours">🕐 8:30 ص - 11:30 م</div>
-                        <div class="pharmacy-status status-open">مفتوحة الآن</div>
+            </div>
+            
+            <div class="pharmacy-card open">
+                <div class="pharmacy-name">صيدلية أربيل المركزية</div>
+                <div class="pharmacy-address">📍 شارع 60 متر، أربيل، العراق</div>
+                <div class="pharmacy-details">
+                    <div class="detail-item">
+                        <span>🕐</span>
+                        <span>8:30 ص - 11:30 م</span>
                     </div>
-                    <div class="pharmacy-info" style="margin-top: 10px;">
-                        <a href="tel:+96466789012" class="pharmacy-phone">📞 +964 66 789 012</a>
-                        <div style="font-size: 12px; color: #f59e0b;">⭐ 4.6</div>
+                    <div class="detail-item">
+                        <span>📞</span>
+                        <a href="tel:+96466789012" class="phone-link">+964 66 789 012</a>
                     </div>
-                    <div class="medicines-list">
+                </div>
+                <div class="status open">مفتوحة الآن</div>
+                <div class="medicines">
+                    <h4>💊 الأدوية المتوفرة:</h4>
+                    <div class="medicine-tags">
                         <span class="medicine-tag">أدوية السكري</span>
                         <span class="medicine-tag">مضادات الالتهاب</span>
-                        <span class="medicine-tag">فيتامينات</span>
+                        <span class="medicine-tag">فيتامينات متنوعة</span>
                         <span class="medicine-tag">أدوية الضغط</span>
                     </div>
                 </div>
-                
-                <div class="pharmacy-card">
-                    <div class="pharmacy-name">صيدلية الموصل الطبية</div>
-                    <div class="pharmacy-address">📍 الساعة، الموصل</div>
-                    <div class="pharmacy-info">
-                        <div class="pharmacy-hours">🕐 7:00 ص - 12:00 ص</div>
-                        <div class="pharmacy-status status-open">مفتوحة الآن</div>
+            </div>
+            
+            <div class="pharmacy-card open">
+                <div class="pharmacy-name">صيدلية الموصل الطبية</div>
+                <div class="pharmacy-address">📍 ساحة الساعة، الموصل، العراق</div>
+                <div class="pharmacy-details">
+                    <div class="detail-item">
+                        <span>🕐</span>
+                        <span>7:00 ص - 12:00 ص</span>
                     </div>
-                    <div class="pharmacy-info" style="margin-top: 10px;">
-                        <a href="tel:+96460456789" class="pharmacy-phone">📞 +964 60 456 789</a>
-                        <div style="font-size: 12px; color: #f59e0b;">⭐ 4.3</div>
+                    <div class="detail-item">
+                        <span>📞</span>
+                        <a href="tel:+96460456789" class="phone-link">+964 60 456 789</a>
                     </div>
-                    <div class="medicines-list">
+                </div>
+                <div class="status open">مفتوحة الآن</div>
+                <div class="medicines">
+                    <h4>💊 الأدوية المتوفرة:</h4>
+                    <div class="medicine-tags">
                         <span class="medicine-tag">مسكنات قوية</span>
                         <span class="medicine-tag">أدوية عصبية</span>
                         <span class="medicine-tag">مضادات حيوية</span>
@@ -515,101 +419,96 @@
             </div>
         </div>
         
-        <div class="footer">
-            <p>© 2025 تطبيق صيدليات العراق - جميع الحقوق محفوظة</p>
-            <p style="margin-top: 5px; font-size: 12px;">للاستفسارات: info@iraq-pharmacy.com</p>
+        <div style="text-align: center; margin-top: 40px; padding: 20px; background: #f5f5f5; border-radius: 15px;">
+            <h3 style="color: #2E7D32;">📞 للطوارئ</h3>
+            <p>في حالة الطوارئ الطبية، اتصل بالرقم: <strong style="color: #C62828;">115</strong></p>
+            <p style="margin-top: 15px; color: #666; font-size: 0.9em;">
+                © 2025 تطبيق صيدليات العراق - خدمة مجانية لمساعدة المواطنين
+            </p>
         </div>
     </div>
 
     <script>
-        // البحث عن الأدوية
-        const searchInput = document.getElementById('searchInput');
-        const searchResults = document.getElementById('searchResults');
+        function showPharmacyInfo(name) {
+            alert("🏥 " + name + "\n\nللمزيد من المعلومات، تصفح القائمة أدناه أو اتصل بالصيدلية مباشرة.");
+        }
         
-        const pharmacies = [
-            {
-                name: 'صيدلية النور',
-                address: 'شارع الرشيد، بغداد',
-                medicines: ['بنادول', 'أسبرين', 'أموكسيسيلين', 'فيتامين د', 'أوميجا 3'],
-                status: 'مفتوحة',
-                phone: '+964 1 234 5678'
-            },
-            {
-                name: 'صيدلية الشفاء 24/7',
-                address: 'حي الجادرية، بغداد',
-                medicines: ['إنسولين', 'ضغط الدم', 'مضاد حيوي', 'بنادول', 'فيتامين ب12'],
-                status: 'مفتوحة',
-                phone: '+964 1 345 6789'
-            },
-            {
-                name: 'صيدلية البصرة الحديثة',
-                address: 'كورنيش البصرة، البصرة',
-                medicines: ['أدوية القلب', 'مسكنات', 'أدوية الأطفال', 'فيتامينات'],
-                status: 'مغلقة',
-                phone: '+964 40 123 456'
-            },
-            {
-                name: 'صيدلية أربيل المركزية',
-                address: 'شارع 60 متر، أربيل',
-                medicines: ['أدوية السكري', 'مضادات الالتهاب', 'فيتامينات', 'أدوية الضغط'],
-                status: 'مفتوحة',
-                phone: '+964 66 789 012'
-            },
-            {
-                name: 'صيدلية الموصل الطبية',
-                address: 'الساعة، الموصل',
-                medicines: ['مسكنات قوية', 'أدوية عصبية', 'مضادات حيوية', 'أسبرين'],
-                status: 'مفتوحة',
-                phone: '+964 60 456 789'
-            }
-        ];
-        
-        searchInput.addEventListener('input', function() {
-            const query = this.value.trim().toLowerCase();
+        function searchMedicines(query) {
+            const resultsDiv = document.getElementById('searchResults');
             
-            if (query === '') {
-                searchResults.innerHTML = '';
+            if (!query || query.trim() === '') {
+                resultsDiv.innerHTML = '';
                 return;
             }
             
-            const results = pharmacies.filter(pharmacy => {
-                return pharmacy.medicines.some(medicine => 
-                    medicine.toLowerCase().includes(query)
-                ) || pharmacy.name.toLowerCase().includes(query);
-            });
+            query = query.toLowerCase().trim();
+            
+            const pharmacies = [
+                {
+                    name: 'صيدلية النور',
+                    address: 'شارع الرشيد، بغداد',
+                    phone: '+964 1 234 5678',
+                    medicines: ['بنادول', 'أسبرين', 'أموكسيسيلين', 'فيتامين د', 'أوميجا 3'],
+                    status: 'مفتوحة'
+                },
+                {
+                    name: 'صيدلية الشفاء',
+                    address: 'حي الجادرية، بغداد',
+                    phone: '+964 1 345 6789',
+                    medicines: ['إنسولين', 'أدوية الضغط', 'مضادات حيوية', 'فيتامين ب12', 'مسكنات'],
+                    status: 'مفتوحة 24/7'
+                },
+                {
+                    name: 'صيدلية أربيل المركزية',
+                    address: 'شارع 60 متر، أربيل',
+                    phone: '+964 66 789 012',
+                    medicines: ['أدوية السكري', 'مضادات الالتهاب', 'فيتامينات متنوعة', 'أدوية الضغط'],
+                    status: 'مفتوحة'
+                },
+                {
+                    name: 'صيدلية الموصل الطبية',
+                    address: 'ساحة الساعة، الموصل',
+                    phone: '+964 60 456 789',
+                    medicines: ['مسكنات قوية', 'أدوية عصبية', 'مضادات حيوية', 'أسبرين'],
+                    status: 'مفتوحة'
+                }
+            ];
+            
+            const results = [];
+            
+            for (let pharmacy of pharmacies) {
+                for (let medicine of pharmacy.medicines) {
+                    if (medicine.toLowerCase().includes(query)) {
+                        results.push({
+                            pharmacy: pharmacy,
+                            medicine: medicine
+                        });
+                        break;
+                    }
+                }
+            }
             
             if (results.length > 0) {
-                let html = '<div class="search-results">';
-                html += '<h3>🎯 نتائج البحث عن "' + query + '":</h3>';
+                let html = '<div style="background: #E8F5E8; padding: 15px; border-radius: 10px; border: 2px solid #4CAF50;">';
+                html += '<h4 style="color: #2E7D32; margin-bottom: 10px;">🎯 نتائج البحث عن "' + query + '":</h4>';
                 
-                results.forEach(pharmacy => {
-                    const matchingMedicines = pharmacy.medicines.filter(medicine => 
-                        medicine.toLowerCase().includes(query)
-                    );
-                    
-                    html += '<div style="margin-bottom: 15px; padding: 10px; background: white; border-radius: 8px; border-left: 3px solid #22c55e;">';
-                    html += '<strong>' + pharmacy.name + '</strong><br>';
-                    html += '<small style="color: #6b7280;">📍 ' + pharmacy.address + ' | 📞 ' + pharmacy.phone + '</small><br>';
-                    html += '<small style="color: #2563eb;">💊 الأدوية المتوفرة: ' + matchingMedicines.join(', ') + '</small>';
+                for (let result of results) {
+                    html += '<div style="background: white; padding: 10px; margin-bottom: 10px; border-radius: 8px; border-left: 3px solid #4CAF50;">';
+                    html += '<strong style="color: #2E7D32;">' + result.pharmacy.name + '</strong><br>';
+                    html += '<small style="color: #666;">📍 ' + result.pharmacy.address + '</small><br>';
+                    html += '<small style="color: #666;">📞 ' + result.pharmacy.phone + '</small><br>';
+                    html += '<small style="color: #2196F3;">✅ ' + result.pharmacy.status + '</small>';
                     html += '</div>';
-                });
+                }
                 
                 html += '</div>';
-                searchResults.innerHTML = html;
+                resultsDiv.innerHTML = html;
             } else {
-                searchResults.innerHTML = '<div class="search-results"><div class="no-results">لم يتم العثور على نتائج للبحث "' + query + '"</div></div>';
+                resultsDiv.innerHTML = '<div style="background: #FFEBEE; padding: 15px; border-radius: 10px; border: 2px solid #ff4444; text-align: center; color: #C62828;">❌ لم يتم العثور على الدواء "' + query + '" في الصيدليات المتاحة</div>';
             }
-        });
+        }
         
-        // تفاعل النقاط على الخريطة
-        document.querySelectorAll('.pharmacy-dot').forEach(dot => {
-            dot.addEventListener('click', function() {
-                const title = this.getAttribute('title');
-                alert('🏥 ' + title + '\n\nاضغط على الهاتف للاتصال أو تصفح القائمة أدناه للمزيد من المعلومات.');
-            });
-        });
-        
-        console.log('✅ تطبيق صيدليات العراق جاهز للاستخدام!');
+        console.log("✅ تطبيق صيدليات العراق جاهز!");
     </script>
 </body>
 </html>
